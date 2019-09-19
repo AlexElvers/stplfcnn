@@ -1,0 +1,69 @@
+type: STLQFCNNHyperparameterOptimizer
+time_horizon: hor-24h-H
+quantile_levels: q-7
+max_evals: 500
+overall_max_evals_factor: 2.5
+max_chunk_size: 1
+max_number_of_weights_between_layers: 1_000_000
+space:
+  tf_seed: 0
+  np_seed: 0
+  history_shape: [!hp.choice [7, 14], 24]
+  iterations: 3000
+  learning_rate: !hp.loguniform [-9.90, -4.61]
+  conv_layers_params: !hp.choice
+  -  # 1 layer
+    - filter_shape: [!hp.shiftedquniform [1, 5, 2], !hp.shiftedquniform [3, 9, 2]]
+      num_filters: !hp.shiftedquniform [15, 75, 1]
+      pooling_shape: !hp.choice [null, [!hp.choice [1, 2], 2]]
+  -  # 2 layers
+    - filter_shape: [!hp.shiftedquniform [1, 5, 2], !hp.shiftedquniform [3, 9, 2]]
+      num_filters: !hp.shiftedquniform [15, 75, 1]
+      pooling_shape: !hp.choice [null, [!hp.choice [1, 2], 2]]
+    - filter_shape: [!hp.shiftedquniform [1, 5, 2], !hp.shiftedquniform [3, 9, 2]]
+      num_filters: !hp.shiftedquniform [15, 75, 1]
+      pooling_shape: !hp.choice [null, [!hp.choice [1, 2], 2]]
+  -  # 3 layers
+    - filter_shape: [!hp.shiftedquniform [1, 5, 2], !hp.shiftedquniform [3, 9, 2]]
+      num_filters: !hp.shiftedquniform [15, 75, 1]
+      pooling_shape: !hp.choice [null, [!hp.choice [1, 2], 2]]
+    - filter_shape: [!hp.shiftedquniform [1, 5, 2], !hp.shiftedquniform [3, 9, 2]]
+      num_filters: !hp.shiftedquniform [15, 75, 1]
+      pooling_shape: !hp.choice [null, [!hp.choice [1, 2], 2]]
+    - filter_shape: [!hp.shiftedquniform [1, 5, 2], !hp.shiftedquniform [3, 9, 2]]
+      num_filters: !hp.shiftedquniform [15, 75, 1]
+      pooling_shape: !hp.choice [null, [!hp.choice [1, 2], 2]]
+  -  # 4 layers
+    - filter_shape: [!hp.shiftedquniform [1, 5, 2], !hp.shiftedquniform [3, 9, 2]]
+      num_filters: !hp.shiftedquniform [15, 75, 1]
+      pooling_shape: !hp.choice [null, [!hp.choice [1, 2], 2]]
+    - filter_shape: [!hp.shiftedquniform [1, 5, 2], !hp.shiftedquniform [3, 9, 2]]
+      num_filters: !hp.shiftedquniform [15, 75, 1]
+      pooling_shape: !hp.choice [null, [!hp.choice [1, 2], 2]]
+    - filter_shape: [!hp.shiftedquniform [1, 5, 2], !hp.shiftedquniform [3, 9, 2]]
+      num_filters: !hp.shiftedquniform [15, 75, 1]
+      pooling_shape: !hp.choice [null, [!hp.choice [1, 2], 2]]
+    - filter_shape: [!hp.shiftedquniform [1, 5, 2], !hp.shiftedquniform [3, 9, 2]]
+      num_filters: !hp.shiftedquniform [15, 75, 1]
+      pooling_shape: !hp.choice [null, [!hp.choice [1, 2], 2]]
+  fc_layers_params: !hp.choice
+  -  # 0 hidden layers
+    - {}
+  -  # 1 hidden layer
+    - activation: relu
+      num_outputs: !hp.shiftedquniform [15, 150, 1]
+    - {}
+  -  # 2 hidden layers
+    - activation: relu
+      num_outputs: !hp.shiftedquniform [15, 150, 1]
+    - activation: relu
+      num_outputs: !hp.shiftedquniform [15, 150, 1]
+    - {}
+#  historical_inputs: !hp.choice [[], [temperature]]
+  historical_inputs: []
+#  historical_inputs: [temperature]
+#  horizon_inputs: !hp.choice [[], [temperature]]
+#  horizon_inputs: []
+  horizon_inputs: [temperature]
+#  issue_time_inputs: !hp.choice [false, true]
+  regularization_weight: !hp.pchoice [[.1, 0], [.9, !hp.loguniform [-11.51, -2.30]]]

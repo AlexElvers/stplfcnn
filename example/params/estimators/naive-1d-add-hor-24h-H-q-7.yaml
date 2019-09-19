@@ -1,0 +1,5 @@
+type: NaiveEstimator
+time_horizon: !ref hor-24h-H
+quantile_levels: !ref q-7
+load_offset: 1440
+noise_type: additive

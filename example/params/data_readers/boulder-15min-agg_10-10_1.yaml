@@ -1,0 +1,6 @@
+type: PecanStreetReader
+base_path: data/pecanstreet
+city: boulder
+resolution: 15min
+aggregation: 10
+columns: "10_1"
